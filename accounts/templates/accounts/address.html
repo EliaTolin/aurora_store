@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} - {{ object.city }}{% endblock head_title %}
+
+{% block content %}
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+
+<br>
+
+<div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex justify-content-between justify-content-between">
+        <h2 class="h2">Dettagli dell'indirizzo selezionato</h2>
+        <button class="btn btn-info" onclick="window.history.go(-1);">
+            <i class="fas fa-undo"></i>
+            Indietro
+        </button>
+    </div>
+    <h5 class="h5 ml-3 mt-3"><strong>Stato : </strong>{{ object.country }}</h5>
+    <h5 class="h5 ml-3"><strong>Citta : </strong>{{ object.city }}</h5>
+    <h5 class="h5 ml-3"><strong>Via: </strong>{{ object.route }}</h5>
+    <h5 class="h5 ml-3"><strong>CAP : </strong>{{ object.cap }}</h5>
+    {% if object.house_number %}
+    <h5 class="h5 ml-3"><strong>Civico : </strong>{{ object.house_number }}</h5>
+    {% endif %}
+    {% if object.note %}
+    <h5 class="h5 ml-3"><strong>Note : </strong>{{ object.note }}</h5>
+    {% else %}
+    <h5 class="h5 ml-3 mb-3"><strong>Note : </strong><a style="color: red">Nessuna nota presente</a></h5>
+    {% endif %}
+
+
+</div>
+{% endblock content %}

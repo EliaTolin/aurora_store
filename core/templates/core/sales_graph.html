@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ block.super }} - Grafico Vendite{% endblock head_title %}
+{% block content %}
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+<br>
+<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+  <h2 class="h2 m-0">Grafico vendite</h2>
+  <button class="btn btn-info" onclick="window.history.go(-1);">
+    <i class="fas fa-undo"></i>
+    Indietro
+  </button>
+</div>
+<div>
+  <canvas id="population-chart" data-url="{% url 'sales_graph' username=request.user.username %}"></canvas>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+{{ apps|json_script:"apps" }}
+<script>
+  $(function () {
+
+    var $populationChart = $("#population-chart");
+    $.ajax({
+      url: $populationChart.data("url"),
+      success: function (data) {
+
+        var key = [], data = [];
+        apps = []
+        apps = JSON.parse('{{ apps|escapejs }}');
+        for (var k in apps) {
+          console.log(k)
+          key.push(k);
+          data.push(apps[k]);
+        }
+
+        var ctx = $populationChart[0].getContext("2d");
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: key,
+            datasets: [{
+              label: 'Giorno',
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+              ],
+              borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+              ],
+              borderWidth: 1,
+              data: data,
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Vendite mensili'
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  max: Math.max.apply(null, data) + 2,
+                  min: 0,
+                  stepSize: 1
+                }
+              }]
+            }
+          }
+        });
+
+      }
+    });
+
+  });
+
+</script>
+{% endblock %}

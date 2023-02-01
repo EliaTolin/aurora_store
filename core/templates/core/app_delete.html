@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}{{ block.super }} - Elimina App{% endblock head_title %}
+{% block content %}
+<div class="card mt-3" style="display: inline-block; width: 50%;">
+   <div class="card-body">
+      <h4 class="h4 card-title text-center">Elimina App</h4>
+      <h5 class="h5 card-subtitle mb-2 text-muted text-center">Vuoi davvero cancellare l' app - {{ object.name }}
+         ?
+      </h5>
+      <br>
+      <h6 class="h6 card-subtitle mb-2 text-muted text-center"> Dispositivo : {{ object.device }} </h6>
+      <br>
+      <form method="post">{% csrf_token %}
+         <input class="btn btn-danger" type="submit" value="Elimina">
+         <a class="btn btn-secondary float-right" href="{%  url 'user_profile' username=request.user.username %}">
+            <i class="fas fa-undo"></i>
+            Indietro</a>
+      </form>
+   </div>
+</div>
+{% endblock content %}

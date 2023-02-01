@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}{{ block.super }} - Carrello{% endblock head_title %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+{% load crispy_forms_tags %}
+<main>
+    <h2 class="h2 mt-3">Riepilogo del carrello</h2>
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Dispositivo</th>
+                <th scope="col">Prezzo</th>
+                <th scope="col">Elimina</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order_app in object.apps.all %}
+            <tr>
+                <td>{{ order_app.product.name }}</td>
+                <td>{{ order_app.product.get_category_display }}</td>
+                <td>
+                    {% if order_app.product.device.is_for_android %}
+                    <h6 style="color: red"> {{ order_app.product.get_device_label }} </h6>
+                    {% else %}
+                    <h6 style="color: green"> {{ order_app.product.get_device_label }} </h6>
+                    {% endif %}
+                </td>
+                <td>{{ order_app.product.price }} €</td>
+                <td><a href="{{ order_app.product.get_remove_from_cart_url }}" class="btn btn-danger"><i
+                            class='far fa-trash-alt'></i></a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Nessuna app aggiunta al carrello</td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <a class='btn btn-primary float-right' href="/">Scopri nuove fantastiche Apps!</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if object.do_checkout %}
+            <tr>
+                <td colspan="4"><b>Totale</b></td>
+                <td colspan="1"><b>{{ object.get_tot_price }}0 €</b></td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <a class='btn btn-success float-right ml-2' href="{% url 'checkout' %}">Checkout</a>
+                    <a class='btn btn-primary float-left' href="/">Continua gli acquisti</a>
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</main>
+{% endblock content %}

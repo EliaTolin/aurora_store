@@ -1,0 +1,128 @@
+{% extends 'base.html' %} {% load static %} {% block head_title %}
+{{ block.super}} - Checkout{% endblock head_title %} {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css" />
+{% load crispy_forms_tags %}
+<main>
+   <br />
+   <div class="container wow fadeIn">
+      <form method="POST">
+         {% csrf_token %}
+         <div class="card">
+            <!-- Address form -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+               <h5 class="h5 m-0 font-weight-bold">Indirizzo di fatturazione</h5>
+            </div>
+            <div class="hideable_shipping_form">
+               <!-- region input-->
+               <div class="control-group ml-3">
+                  <label class="control-label">Stato</label>
+                  <div class="controls">
+                     {{ form.country }}
+                     <p class="help-block"></p>
+                  </div>
+               </div>
+               <br />
+               <!-- city input-->
+               <div class="control-group ml-3">
+                  <label class="control-label">Citta</label>
+                  <div class="controls">
+                     {{ form.city }}
+                     <p class="help-block"></p>
+                  </div>
+               </div>
+               <br />
+               <!-- postal-code input-->
+               <div class="control-group ml-3">
+                  <label class="control-label">CAP</label>
+                  <div class="controls">
+                     {{ form.cap }}
+                     <p class="help-block"></p>
+                  </div>
+               </div>
+               <br />
+               <div class="control-group ml-3">
+                  <label class="control-label">Via</label>
+                  <div class="controls">
+                     {{ form.route }}
+                     <p class="help-block">Strada/Piazza</p>
+                  </div>
+               </div>
+               <br />
+               <div class="control-group ml-3">
+                  <label class="control-label">Numero civico</label>
+                  <div class="controls">{{ form.house_number }}</div>
+               </div>
+               <br />
+               <div class="control-group ml-3">
+                  <label class="control-label">Eventuali note</label>
+                  <div class="controls">
+                     {{ form.note }}
+                     <p class="help-block">Informazioni per l'ordine</p>
+                  </div>
+               </div>
+               <br />
+               <div class="custom-control custom-checkbox ml-3">
+                  <input type="checkbox" class="custom-control-input" name="save_info" id="save_info" />
+                  <label class="custom-control-label" for="save_info">Salva questo indirizzo di fatturazione come default</label>
+               </div>
+            </div>
+            {% if default_billing_address.city %}
+            <div class="custom-control custom-checkbox ml-3">
+               <input type="checkbox" class="custom-control-input" name="use_default_shipping"
+                  id="use_default_shipping" />
+               <label class="custom-control-label" for="use_default_shipping">Utilizza l'indirizzo di default con
+                  city: {{
+                  default_billing_address.city }}</label>
+            </div>
+            {% endif %}
+            <br />
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+               <h5 class="h5 m-0 font-weight-bold">
+                  Consegna - Inserisci email a cui spedire l'app
+               </h5>
+            </div>
+            <div class="control-group ml-3">
+               <label class="control-label">Email</label>
+               <div class="controls">
+                  {{ form.email }}
+               </div>
+            </div>
+            <br />
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+               <h5 class="h5 m-0 font-weight-bold">
+                  Pagamento - Seleziona un metodo di pagamento
+               </h5>
+            </div>
+            <div class="d-block my-3">
+               <div class="custom-control custom-radio">
+                  {{ form.opzioni_pagamento }}
+               </div>
+            </div>
+         </div>
+         <hr class="mb-4" />
+         <button class="btn btn-warning" onclick="window.history.go(-1);">
+            Torna al carrello
+         </button>
+         <button class="btn btn-success" type="submit">Invia l'ordine</button>
+         <hr />
+      </form>
+   </div>
+</main>
+{% endblock content %} {% block extra_scripts %}
+<script>
+   var hideable_shipping_form = $(".hideable_shipping_form");
+
+   var use_default_shipping = document.querySelector(
+      "input[name=use_default_shipping]"
+   );
+
+   use_default_shipping.addEventListener("change", function () {
+      if (this.checked) {
+         hideable_shipping_form.hide();
+      } else {
+         hideable_shipping_form.show();
+      }
+   });
+</script>
+{% endblock extra_scripts %}

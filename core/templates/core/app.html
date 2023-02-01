@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}{{ block.super }} - {{ app.name }}{% endblock head_title %}
+{% block content %}
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+<div class="container my-3 center text-center">
+    <h2 class="h2">Visualizza App - {{ app.name }}</h2>
+</div>
+<div class="container my-3">
+    <div class="card border-success mb-3" style="max-width: 1070px;">
+        <div class="card-header">
+            <h3 class="h3"><strong>{{ app.name }}</strong></h3>
+            <p class="card-text">
+                <small class="text-muted">Inserito : {{ app.data }} |</small>
+                <small class="text-muted">Sviluppatore :<a href="{% url 'user_profile' app.developer %}"
+                        class="dark-grey-text"> {{app.developer}} </a>
+                </small>
+            </p>
+        </div>
+        <div class="row g-0">
+            <div class="col-md-4 ml-5">
+                <img src="{{ app.image.url }}" height="300" width="200"
+                    class="img-fluid rounded-start ml-3 mr-3 mt-3 mb-3" alt="Foto dell' app">
+            </div>
+            <div class="card-body col-7">
+                <p class="card-text"><strong>Categoria : </strong><a href="{% url 'categories' app.category %}"
+                        class="dark-grey-text">{{ app.get_category_display}} </a></p>
+                <p class="card-text"><strong>Valutazione : </strong>
+                    <strong style="color:orange;">{{ app.raiting }}</strong>
+                </p>
+                <p class="card-text"><strong>Numero recensioni : </strong>{{ app.total_rate }}</p>
+                <p class="card-text"><strong>Identificativo : </strong>{{ app.app_id }}</p>
+                <p class="card-text"><strong>Versione : </strong>{{ app.version }}</p>
+                <p class="card-text"><strong>Descrizione : </strong>{{ app.description }}</p>
+                <p class="card-text"><strong>Dispositivo : </strong>
+                    {% if app.is_for_android %}
+                    <span style="color: red"> {{ app.get_device_label }} </span>
+                    {% else %}
+                    <span style="color: green"> {{ app.get_device_label }} </span>
+                    {% endif %}
+                </p>
+                <p class="card-text"><strong>Email sviluppatore : </strong>{{ app.email }}</p>
+                <h3 class="h3 card-text mb-3 text-left"><strong>Prezzo : {{ app.price }}0 €</strong></h3>
+                {% if app.developer.username != request.user.username %}
+                {% if view.is_purchased %}
+                <a href="{%  url 'app_rate' app.id %}" class="btn btn-warning mb-3">
+                    <i class="far fa-edit"></i>
+                    Valuta
+                </a>
+                {% endif %}
+                <a href="{{ object.get_add_to_cart_url }}" class="btn btn-success mb-3">
+                    <i class="fas fa-cart-plus"></i>
+                    Aggiungi al carrello
+                </a>
+                {% else %}
+                <a href="{%  url 'app_modify' app.id %}" class="btn btn-warning mb-3">
+                    <i class="far fa-edit"></i>
+                    Modifica
+                </a>
+                <a href="{%  url 'app_delete' app.id %}" class="btn btn-danger mb-3">
+                    <i class="fas fa-trash-alt"></i>
+                    Elimina
+                </a>
+                {% endif %}
+                <button class="btn btn-info mb-3 mx-auto" onclick="window.history.go(-1);">
+                    <i class="fas fa-undo"></i>
+                    Indietro
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock content %}

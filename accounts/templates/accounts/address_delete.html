@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}{{ block.super }} - Elimina Indirizzo{% endblock head_title %}
+
+{% block content %}
+
+<div class="card " style="display: inline-block;width: 33%;">
+    <div class="card-body">
+        <h4 class="h4 card-title">Cancella email</h4>
+        <h5 class="h5 card-subtitle mb-2 text-muted">Vuoi davvero cancellare l'indirizzo {{ object.email }} ?</h5>
+        <form method="post">{% csrf_token %}
+            <input class="btn btn-danger" type="submit" value="Elimina">
+            <a class="btn btn-secondary float-right"
+                href="{%  url 'address_page' username=request.user.username %}">Annulla</a>
+        </form>
+
+    </div>
+</div>
+{% endblock content %}

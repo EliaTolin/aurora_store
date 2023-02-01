@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}{{ block.super }} - Inserisci App {% endblock head_title %}
+{% block content %}
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+<br>
+<br>
+<div class="card shadow mb-4">
+   <!-- Card Header - Dropdown -->
+   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h6 class="h6 m-0 font-weight-bold ">Inserisci un app - Compila tutti i campi di seguito riportati</h6>
+   </div>
+   <!-- Card Body -->
+   <div class="card-body">
+      <form class="" method="POST" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <br>
+      <input type="submit" class="btn btn-success" value="Metti in vendita">
+   </div>
+</div>
+{% endblock content %}

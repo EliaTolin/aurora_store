@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}{{ block.super }} - Homepage{% endblock head_title %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+<main>
+    <div class="container">
+        <div class="card-header mt-3 mb-3 d-flex flex-row align-items-center justify-content-between ">
+            <a href="{% url 'app_page' %}" class="btn btn-primary ml-auto mr-1">
+                Tutte le apps in vendita</a>
+            <a href="{% url 'add_app' %}" class="btn btn-success">
+                <i class="fas fa-plus"></i>
+                Vendi un app
+            </a>
+        </div>
+        {% if user_device == devices.ios %}
+        <h2 class="h2">Le migliori app per i tuoi device <span style="color:green;"><strong>iOS</strong></span>, per te!
+        </h2>
+        {% else %}
+        <h2 class="h2">Le migliori app per gli utenti <span style="color:green;"><strong>iOS</strong></span>!</h2>
+        {% endif %}
+        <hr>
+        {% if not iosconvenient_list %}
+        {% if user_device == devices.ios %}
+        <h4 class="h4 text-muted">Non ci sono ancora app per il tuo dispositivo iOS!</h4>
+        {% else %}
+        <h4 class="h4 text-muted">Ci dispiace, non ci sono ancora apps per i dispositivi iOS!</h4>
+        {% endif %}
+        {% endif %}
+        <section class="text-center mb-4">
+            <div class="row wow fadeIn">
+                {% for app in iosconvenient_list%}
+                {% include 'component/app_component.html' %}
+                {% endfor %}
+            </div>
+        </section>
+        {% if user_device == devices.android %}
+        <h2 class="h2">Le migliori app per i tuoi device <span style="color:red;"><strong>Android</strong></span>, per
+            te!</h2>
+        {% else %}
+        <h2 class="h2">Le migliori app per gli utenti <span style="color:red;"><strong>Android</strong></span>!</h2>
+        {% endif %}
+        <hr>
+        {% if not androidconvenient_list %}
+        {% if user_device == devices.android %}
+        <h4 class="h4 text-muted">Non ci sono ancora app per il tuo dispositivo Android!</h4>
+        {% else %}
+        <h4 class="h4 text-muted">Ci dispiace, non ci sono ancora apps per i dispositivi Android!</h4>
+        {% endif %}
+        {% endif %}
+        <section class="text-center mb-4">
+            <div class="row wow fadeIn">
+                {% for app in androidconvenient_list%}
+                {% include 'component/app_component.html' %}
+                {% endfor %}
+            </div>
+        </section>
+        <!-- {% if request.user.is_authenticated %} -->
+        <h2 class="h2">Consigliati per te</h2>
+        <hr>
+        {% if not recommendation_list %}
+        <h4 class="h4 text-muted">Il nostro sistema ti selezionerà le migliori app sia per iOS che Android!</h4>
+        {% endif %}
+        <section class="text-center mb-4">
+            <div class="row wow fadeIn">
+                {% for app in recommendation_list %}
+                {% include 'component/app_component.html' %}
+                {% endfor %}
+            </div>
+        </section>
+        <!-- {% endif %} -->
+        {% if is_paginated %}
+        <nav class="d-flex justify-content-center wow fadeIn">
+            <ul class="pagination pg-blue">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                {% endif %}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+    <hr>
+    <h6 class="h6 text-center">Hai problemi o hai bisogno di aiuto ? <a href="mailto:help@aurorastore.com">Scrivici un'
+            e-mail !</a>
+    </h6>
+    <p class="text-center text-muted">Site by Elia Tolin</p>
+    <br>
+</main>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{{ block.super }} - Registrati {% endblock head_title %}
+{% block content %}
+<br>
+<div class="row justify-content-center">
+    <div class="col-6 text-center">
+        <h2 style="color:#16E0BD;" class="h2">Benvenuto su AuroraStore - Registrati</h2>
+        <form class="" method="POST" novalidate>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-info" value="Crea account">
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,12 @@
+body, html {
+   height: 100%;
+   margin: 0;
+}
+#container {
+   width: 350px;
+   height: 200px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   margin: -100px 0 0 -175px;
+}

@@ -1,0 +1,36 @@
+<div class="col-lg-3 col-md-6 mb-4">
+    <div class="card">
+        <div class="view overlay">
+            {% if app.image %}
+            <img src="{{ app.image.url }}" class="card-img-top" width="100" height="200">
+            {% endif %}
+            <a href="{{ app.get_absolute_url }}">
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+        <div class="card-body text-center">
+            <h3 class="h3">{{ app.get_category_display }}</h3>
+            <h5 class="h5 h5">
+                <strong>
+                    <a href="{{ app.get_absolute_url }}" class="dark-grey-text">{{ app.name }}
+                    </a>
+                </strong>
+            </h5>
+            <h4 class="h4 font-weight-bold blue-text">
+                {% if app.price == 0 %}
+                Gratis
+                {% else %}
+                {{ app.price }}0 €
+                {% endif %}
+                {% if app.is_for_android %}
+                <h6 style="color: red"> {{ app.get_device_label }} </h6>
+                {% else %}
+                <h6 style="color: green"> {{ app.get_device_label }} </h6>
+                {% endif %}
+                <strong>Valutazione : </strong>
+                <strong style="color:orange;">{{ app.raiting }}</strong>
+            </h4>
+            <p class="text-muted">{{ app.data|timesince }} fa</p>
+        </div>
+    </div>
+</div>

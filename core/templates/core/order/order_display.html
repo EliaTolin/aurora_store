@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}{{ block.super }} - Dettagli Ordine {% endblock head_title %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+<main>
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between mt-3">
+        <h6 class="h6 m-0 font-weight-bold">Dettagli dell' ordine</h6>
+        <button class="btn btn-info" onclick="window.history.go(-1);">Indietro</button>
+    </div>
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nome app</th>
+                <th scope="col">Dispositivo</th>
+                <th scope="col">Prezzo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order_app in purchase_list %}
+            <tr>
+                <td><a href="{{ order_app.product.get_absolute_url }}">{{ order_app.product.name}}</a></td>
+                <td>
+                    {% if order_app.product.device.is_for_android %}
+                    <h6 style="color: red"> {{ order_app.product.get_device_label }} </h6>
+                    {% else %}
+                    <h6 style="color: green"> {{ order_app.product.get_device_label }} </h6>
+                    {% endif %}
+                </td>
+                <td>{{ order_app.product.price}}0 €</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% endblock content %}
