@@ -40,7 +40,13 @@
                     {% endif %}
                 </p>
                 <p class="card-text"><strong>Email sviluppatore : </strong>{{ app.email }}</p>
-                <h3 class="h3 card-text mb-3 text-left"><strong>Prezzo : {{ app.price }}0 €</strong></h3>
+                <h4 style="color:blueviolet;" class="h4 font-weight-bold blue-text">
+                    {% if app.price == 0 %}
+                    L'applicazione è Gratis
+                    {% else %}
+                    Prezzo : {{ app.price }}0 €
+                    {% endif %}
+                </h4>
                 {% if app.developer.username != request.user.username %}
                 {% if view.is_purchased %}
                 <a href="{%  url 'app_rate' app.id %}" class="btn btn-warning mb-3">

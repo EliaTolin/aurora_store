@@ -9,28 +9,30 @@
             </a>
         </div>
         <div class="card-body text-center">
-            <h3 class="h3">{{ app.get_category_display }}</h3>
-            <h5 class="h5 h5">
+            <h5 class="h5" class="h5">{{ app.get_category_display }}</h5>
+            <h3 class="h3">
                 <strong>
                     <a href="{{ app.get_absolute_url }}" class="dark-grey-text">{{ app.name }}
                     </a>
                 </strong>
-            </h5>
-            <h4 class="h4 font-weight-bold blue-text">
+            </h3>
+            <h4 style="color:blueviolet;" class="h4 font-weight-bold blue-text">
                 {% if app.price == 0 %}
                 Gratis
                 {% else %}
                 {{ app.price }}0 €
                 {% endif %}
-                {% if app.is_for_android %}
-                <h6 style="color: red"> {{ app.get_device_label }} </h6>
-                {% else %}
-                <h6 style="color: green"> {{ app.get_device_label }} </h6>
-                {% endif %}
+            </h4>
+            {% if app.is_for_android %}
+            <h6 style="color: red"><strong>{{ app.get_device_label }}</strong></h6>
+            {% else %}
+            <h6 style="color: green"><strong>{{ app.get_device_label }}</strong></h6>
+            {% endif %}
+            <h5 class="h5 font-weight-bold">
                 <strong>Valutazione : </strong>
                 <strong style="color:orange;">{{ app.raiting }}</strong>
-            </h4>
-            <p class="text-muted">{{ app.data|timesince }} fa</p>
+                <p class="text-muted">{{ app.data|timesince }} fa</p>
+            </h5>
         </div>
     </div>
 </div>

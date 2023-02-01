@@ -27,7 +27,7 @@ class AllAppView(ListView):
     model = App
     paginate_by = 4
     template_name = 'core/app_page.html'
-    queryset = App.objects.filter(ordered=False).order_by("-pk")
+    queryset = App.objects.filter().order_by("-pk")
 
 
 ''' 
@@ -86,7 +86,7 @@ def get_user_profile_view(request, username):
         return get_other_profile_view(request, username)
     user = get_object_or_404(User, username=username)
     user_apps = App.objects.filter(
-        developer=user.pk, ordered=False).order_by("-pk")
+        developer=user.pk).order_by("-pk")
     paginator = Paginator(user_apps, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -134,7 +134,7 @@ Show other profiles
 def get_other_profile_view(request, username):
     user = get_object_or_404(User, username=username)
     user_apps = App.objects.filter(
-        developer=user.pk, ordered=False).order_by("-pk")
+        developer=user.pk).order_by("-pk")
     paginator = Paginator(user_apps, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -514,7 +514,7 @@ Filter for categories
 
 def get_category_filter(request, cat):
     object_list = App.objects.filter(
-        category=cat, ordered=False).order_by("-pk")
+        category=cat).order_by("-pk")
     paginator = Paginator(object_list, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -644,7 +644,7 @@ class IncreasingPriceView(ListView):
     model = App
     paginate_by = 4
     template_name = "core/app_page.html"
-    queryset = App.objects.filter(ordered=False).order_by("price")
+    queryset = App.objects.filter().order_by("price")
 
 
 '''View for show the app by decreasing price'''
@@ -654,7 +654,7 @@ class DecreasingPriceView(ListView):
     model = App
     paginate_by = 4
     template_name = "core/app_page.html"
-    queryset = App.objects.filter(ordered=False).order_by("-price")
+    queryset = App.objects.filter().order_by("-price")
 
 
 '''View for show only android apps'''
@@ -665,7 +665,7 @@ class AndroidDevicesView(ListView):
     paginate_by = 4
     template_name = "core/app_page.html"
     queryset = App.objects.filter(
-        device=Devices.android.name, ordered=False).order_by("-pk")
+        device=Devices.android.name).order_by("-pk")
 
 
 '''View for show only iOS apps'''
@@ -676,7 +676,7 @@ class IOSDevicesView(ListView):
     paginate_by = 4
     template_name = "core/app_page.html"
     queryset = App.objects.filter(
-        device=Devices.ios.name, ordered=False).order_by("-pk")
+        device=Devices.ios.name).order_by("-pk")
 
 
 '''Function for get the graphs data'''
