@@ -98,11 +98,3 @@ In tal modo non sarà necessario procedere alla strutturazione delle tabelle nel
 ## Contributing ⭐️
 
 Dopo l'8 Febbraio 2023 è possibile contribuire!
-
-### TO DO ⭐️
-
-- Reset DB
-
-- Creazione utente admin
-
-- Eliminazione cache
