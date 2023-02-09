@@ -94,7 +94,3 @@ In tal modo non sarà necessario procedere alla strutturazione delle tabelle nel
 ## Acknowledgements 📚
 
 - [Esame di Tecnologie Web](https://personale.unimore.it/rubrica/contenutiad/clcanali/2022/65389/N0/N0/9999)
-
-## Contributing ⭐️
-
-Dopo l'8 Febbraio 2023 è possibile contribuire!
